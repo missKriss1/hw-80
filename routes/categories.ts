@@ -24,13 +24,20 @@ categoryRouter.get('/', async (req, res) => {
 })
 
 categoryRouter.get('/:id', async (req, res) => {
+    if(!req.params.id){
+        res.status(400).send("Id params must be in url");
+    }
     const categories = await categoryDb.categoryById(req.params.id);
-    res.send(categories);
+    if (categories){
+        res.send(categories);
+    }else{
+        res.send("Category not found");
+    }
 })
 
 categoryRouter.delete('/:id', async (req, res) => {
     if (!req.params.id) {
-        res.status(400).send("Id is required");
+        res.status(400).send("Id params must be in url");
     }
     let categories = await categoryDb.deleteCategory(req.params.id);
     res.send(categories);

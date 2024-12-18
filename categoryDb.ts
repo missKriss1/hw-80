@@ -25,10 +25,11 @@ const categoryDb = {
     },
     async categoryById(id: string) {
         const category = data.find(cat => cat.id === id);
-        if (!category) {
-            throw new Error(`Категория с ID ${id} не найдена`);
+        if (category) {
+            return category;
+        }else {
+            return null
         }
-        return category;
     },
     async deleteCategory(id: string){
         const index = data.findIndex(cat => cat.id === id);
